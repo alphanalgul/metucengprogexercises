@@ -1,18 +1,11 @@
-# 🎲 Drop Dead – Dice Game
+#  Drop Dead – Dice Game
 
-## 📘 Description
+##  Description
 
 - This project implements the **Drop Dead dice game** between a **player and the computer**.
 - The game is turn-based and played with 5 dice per turn.
-- Key programming concepts used include:
-  - Functions
-  - Conditional statements
-  - Loops
-  - Random number generation
 
----
-
-## 🧠 Game Rules
+##  Game Rules
 
 - Two players: Computer and Human.
 - Each round:
@@ -27,7 +20,7 @@
 
 ---
 
-## 🔧 Functions
+##  Functions
 
 - `roll_a_dice()`  
   - Simulates rolling a 6-sided die and returns a value from 1 to 6.
@@ -43,7 +36,7 @@
 
 ---
 
-## 💡 Features
+##  Features
 
 - Allows the user to choose the number of rounds
 - Randomized dice rolls for fairness
@@ -53,7 +46,7 @@
 
 ---
 
-## 🖥️ Sample Run (Simplified)
+##  Sample Run:
 
 - `Welcome to the Drop Dead game!`
 - `How many rounds would you like to play? 2`
@@ -82,13 +75,5 @@
 
 ---
 
-## 🛠️ Technical Constraints
-
-- ❌ No global variables  
-- ❌ No arrays or strings  
-- ❌ No `goto` statements  
-- ✅ Use functions and basic C control structures (`if`, `while`, etc.)
-
----
 
 
