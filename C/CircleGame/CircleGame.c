@@ -219,31 +219,30 @@ void stepComputer(char **computer, int stepNumComp, int *currentRow, int *curren
         }
     }
 
-    if (*currentCol == trapCopCol && *currentRow == trapCopRow) {
-        if (stepNumComp > trapValueCop) {
-            reverseGame = stepNumComp - trapValueCop;
-            actualStep = reverseGame;
-        } else {
-            reverseGame = stepNumComp;
-            actualStep = 0;
-        }
-
-        for (int j = 0; j < reverseGame; j++) {
-            if ((*currentRow) < BOARD_SIZE - 1 && (*currentCol) == 0) {
-                (*currentRow)++;
-            } else if ((*currentCol) < BOARD_SIZE - 1 && (*currentRow) == BOARD_SIZE - 1) {
-                (*currentCol)++;
-            } else if ((*currentRow) > 0 && (*currentCol) == BOARD_SIZE - 1) {
-                (*currentRow)--;
-            } else if ((*currentCol) > 0 && (*currentRow) == 0) {
-                (*currentCol)--;
-            }
-        }
-
-        printf("Computer Trapped at index %d %d! %d forward - %d backward = %d step.\n",
-               trapCopRow, trapCopCol, stepNumComp, trapValueCop, actualStep);
+  if (*currentCol == trapCopCol && *currentRow == trapCopRow) {
+    if (stepNumComp > trapValueCop) {
+        reverseGame = trapValueCop;
+        actualStep = stepNumComp - trapValueCop;
+    } else {
+        reverseGame = stepNumComp;
+        actualStep = 0;
     }
 
+    for (int j = 0; j < reverseGame; j++) {
+        if ((*currentRow) < BOARD_SIZE - 1 && (*currentCol) == 0) {
+            (*currentRow)++;
+        } else if ((*currentCol) < BOARD_SIZE - 1 && (*currentRow) == BOARD_SIZE - 1) {
+            (*currentCol)++;
+        } else if ((*currentRow) > 0 && (*currentCol) == BOARD_SIZE - 1) {
+            (*currentRow)--;
+        } else if ((*currentCol) > 0 && (*currentRow) == 0) {
+            (*currentCol)--;
+        }
+    }
+
+    printf("Computer trapped at index %d %d! %d forward - %d backward = %d step.\n",
+           trapCopRow, trapCopCol, stepNumComp, reverseGame, actualStep);
+}
     computer[*currentRow][*currentCol] = 'C';
 }
 
@@ -289,8 +288,8 @@ void stepPlayer(char **player, int stepNumPlayer, int *currentRow, int *currentC
 
     if (*currentCol == trapPlayerCol && *currentRow == trapPlayerRow) {
         if (stepNumPlayer > trapValuePlayer) {
-            reverseGame = stepNumPlayer - trapValuePlayer;
-            actualStep = reverseGame;
+            reverseGame = trapValuePlayer;
+            actualStep = stepNumPlayer - trapValuePlayer;
         } else {
             reverseGame = stepNumPlayer;
             actualStep = 0;
@@ -309,7 +308,7 @@ void stepPlayer(char **player, int stepNumPlayer, int *currentRow, int *currentC
         }
 
         printf("Player Trapped at index %d %d! %d forward - %d backward = %d step.\n",
-               trapPlayerRow, trapPlayerCol, stepNumPlayer, trapValuePlayer, actualStep);
+               trapPlayerRow, trapPlayerCol, stepNumPlayer, reverseGame, actualStep);
     }
 
     player[*currentRow][*currentCol] = 'P';
