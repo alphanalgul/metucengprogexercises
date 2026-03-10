@@ -373,6 +373,11 @@ void generateTrapValues(int *trapValueComp, int *trapValuePlayer) {
 int checkTrapIndex(int trapPlayerRow, int trapPlayerCol) {
     int x = 0, y = 0;
 
+    if ((trapPlayerRow == 0 && trapPlayerCol == 0) ||
+        (trapPlayerRow == BOARD_SIZE - 1 && trapPlayerCol == BOARD_SIZE - 1)) {
+        return 0;
+    }
+
     for (int i = 0; i < PATH_LENGTH; i++) {
         if (x < BOARD_SIZE - 1 && y == 0) {
             x++;
@@ -388,6 +393,9 @@ int checkTrapIndex(int trapPlayerRow, int trapPlayerCol) {
             return 1;
         }
     }
+
+    return 0;
+}
 
     return 0;
 }
