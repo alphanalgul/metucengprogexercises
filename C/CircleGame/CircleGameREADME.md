@@ -38,10 +38,3 @@ This project was developed as part of my **Computer Engineering bachelor's cours
 9. The first player to complete a full loop wins.
 
 ---
-
-## Compilation
-
-Compile using **GCC** (or any C compiler supporting C99).
-
-```bash
-gcc -std=c99 -Wall circle_game.c -o circle_game
