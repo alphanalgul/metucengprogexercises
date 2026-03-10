@@ -1,6 +1,6 @@
-# 🎲 Crag – Dice Game
+#  Crag – Dice Game
 
-## 📘 Description
+## Description
 
 - This project implements the **Crag** dice game between a **human player and the computer**.
 - The game involves strategy, dice re-rolls, and score-based decision making.
@@ -11,7 +11,7 @@
 
 ---
 
-## 🧠 Game Rules
+## Game Rules
 
 - Each game consists of **N rounds** (chosen by the user).
 - In each round:
@@ -21,7 +21,7 @@
 
 ---
 
-## 🎯 Scoring Categories
+##  Scoring Categories
 
 Scores are evaluated **top-down**, and only the **highest applicable category** is used.
 
@@ -38,7 +38,7 @@ Scores are evaluated **top-down**, and only the **highest applicable category** 
 
 ---
 
-## 💡 Features
+##  Features
 
 - User-defined number of rounds
 - Player can **choose to re-roll** any of the 3 dice once
@@ -49,7 +49,7 @@ Scores are evaluated **top-down**, and only the **highest applicable category** 
 
 ---
 
-## 🔧 Functions Used
+##  Functions Used
 
 - `roll_a_dice()`  
   - Rolls a die and returns a value between 1–6
@@ -65,7 +65,7 @@ Scores are evaluated **top-down**, and only the **highest applicable category** 
 
 ---
 
-## 🖥️ Sample Run (Simplified)
+##  Sample Run:
 
 - `Welcome to Crag game!`
 - `How many rounds would you like to play? 3`
