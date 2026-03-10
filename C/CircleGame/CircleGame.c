@@ -1,321 +1,213 @@
 /*
  * The Circle Game
- * 
- * A C-based board game where a player and a computer race 
+ *
+ * A C-based board game where a player and the computer race
  * around the edges of a 10x10 board.
- * Each round, they roll a dice to move forward, but traps 
+ * Each round, they roll a dice to move forward, but traps
  * placed on the board can send them backwards.
- * The first to complete a loop around the board wins. Includes 
- * logic for dice rolling, trap placement,
- * board rendering, and movement handling.
+ * The first to complete a loop around the board wins.
  */
-
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 #define BOARD_SIZE 10
+#define PATH_LENGTH 36
 
-int rollDice(int);
-
-void stepComputer(char **, int, int *, int *, int *, int *, int *);
-
-void displayBoard(char **, char **);
-
-void generateTrapIndex(char **, int *, int *);
-
-void generateTrapValues(int *, int *);
-
-void stepPlayer(char **, int, int *, int *, int *, int *, int *);
-
-int checkTrapIndex(int, int);
+int rollDice(void);
+void stepComputer(char **computer, int stepNumComp, int *currentRow, int *currentCol,
+                  int trapCopCol, int trapCopRow, int trapValueCop);
+void stepPlayer(char **player, int stepNumPlayer, int *currentRow, int *currentCol,
+                int trapPlayerCol, int trapPlayerRow, int trapValuePlayer);
+void displayBoard(char **computer, char **player);
+void generateTrapIndex(char **computerBoard, int *trapRow, int *trapCol);
+void generateTrapValues(int *trapValueComp, int *trapValuePlayer);
+int checkTrapIndex(int trapPlayerRow, int trapPlayerCol);
+void initializeBoards(char **computer, char **player);
+void freeBoards(char **computer, char **player);
+void clearInputBuffer(void);
 
 int main(void) {
-    //variables
-    int changeTimeVar = 10;
-    int stepNumPlayer, stepNumComp;
-    int trapCopRow, trapCopCol, trapValuePlayer, trapValueComp;
-    int trapPlayerRow, trapPlayerCol;
-    int check;
-    int firstTurnPlayer, firstTurnComp;
+    srand((unsigned int)time(NULL));
 
-    srand(time(NULL) * changeTimeVar);
+    char **computer = (char **)malloc(sizeof(char *) * BOARD_SIZE);
+    char **player = (char **)malloc(sizeof(char *) * BOARD_SIZE);
 
-    char **computer = (char **) malloc(sizeof(char *) * BOARD_SIZE);
-    char **player = (char **) malloc(sizeof(char *) * BOARD_SIZE);
+    if (computer == NULL || player == NULL) {
+        fprintf(stderr, "Memory allocation failed.\n");
+        return 1;
+    }
+
     for (int i = 0; i < BOARD_SIZE; i++) {
-        computer[i] = (char *) malloc(sizeof(char) * BOARD_SIZE);
-        player[i] = (char *) malloc(sizeof(char) * BOARD_SIZE);
-    }
+        computer[i] = (char *)malloc(sizeof(char) * BOARD_SIZE);
+        player[i] = (char *)malloc(sizeof(char) * BOARD_SIZE);
 
-    int rowCop, colCop;
-    int rowPlayer, colPlayer;
-    int round = 0, checkWinner = 0, winnerComputer = 0, winnerPlayer = 0;
-    char again = 'x';
-    int isValidIndex;
-    // generate table
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
-            if (i == 0 || i == 9 || j == 0 || j == 9) {
-                player[i][j] = '-';
-                computer[i][j] = '-';
-            } else {
-                player[i][j] = ' ';
-                computer[i][j] = ' ';
+        if (computer[i] == NULL || player[i] == NULL) {
+            fprintf(stderr, "Memory allocation failed.\n");
+            for (int j = 0; j <= i; j++) {
+                free(computer[j]);
+                free(player[j]);
             }
+            free(computer);
+            free(player);
+            return 1;
         }
     }
 
-    //initial tool
-    player[0][0] = 'P';
-    computer[9][9] = 'C';
-    round = 0;
-    do {
-        checkWinner = 0;
-        winnerComputer = 0;
-        winnerPlayer = 0;
-        changeTimeVar *= 10;
-        stepNumComp = rollDice(changeTimeVar);
-        stepNumPlayer = rollDice(changeTimeVar * 10);
+    char again = 'y';
 
-        if (round == 0) {
-            //determine turn
-            do {
-                firstTurnPlayer = rollDice(changeTimeVar * 100);
-                firstTurnComp = rollDice(changeTimeVar * 50);
-            } while (firstTurnPlayer == firstTurnComp);
-            // check who going to start game
-            if (firstTurnComp > firstTurnPlayer) {
-                isValidIndex = 0;
-                generateTrapValues(&trapValueComp, &trapValuePlayer);
-                printf("Welcome to the Circle Game! :)\n"
-                       "Let's get started!\n");
+    while (again == 'y' || again == 'Y') {
+        int stepNumPlayer, stepNumComp;
+        int trapCopRow, trapCopCol, trapValuePlayer, trapValueComp;
+        int trapPlayerRow, trapPlayerCol;
+        int firstTurnPlayer, firstTurnComp;
+        int rowCop = 9, colCop = 9;
+        int rowPlayer = 0, colPlayer = 0;
+        int round = 0;
+        int winnerComputer = 0, winnerPlayer = 0;
+        int isValidIndex = 0;
 
-                printf("I have rolled the dice and got %d!\n", firstTurnComp);
-                printf("I have rolled the dice for you and you got %d!\n", firstTurnPlayer);
+        initializeBoards(computer, player);
 
-                printf("----Computer----\n");
-                generateTrapIndex(computer, &trapCopRow, &trapCopCol);
-                printf("Generated trap index (row col):%d %d\n", trapCopRow, trapCopCol);
-                printf("Generated trap value:%d\n", trapValueComp);
+        printf("Welcome to the Circle Game! :)\n");
+        printf("Let's get started!\n");
 
+        do {
+            firstTurnPlayer = rollDice();
+            firstTurnComp = rollDice();
+        } while (firstTurnPlayer == firstTurnComp);
 
-                printf("----Player----\n");
-                while (isValidIndex != 1) {
-                    printf("Enter trap index (row col):");
-                    scanf("%d %d", &trapPlayerRow, &trapPlayerCol);
+        generateTrapValues(&trapValueComp, &trapValuePlayer);
 
-                    check = checkTrapIndex(trapPlayerRow, trapPlayerCol);
-                    if (check == 1) {
-                        isValidIndex = 1;
-                    } else if (checkTrapIndex(trapPlayerRow, trapPlayerCol) == 0) {
-                        isValidIndex = 0;
-                        printf("The trap index should be placed around the board.\n");
-                    }
-                }
-                printf("Generated trap value:%d\n", trapValuePlayer);
-                player[trapPlayerRow][trapPlayerCol] = '*';
-
-                printf("---------Initial Boards-------\n");
-                displayBoard(computer, player);
-            } else {
-                printf("Welcome to the Circle Game! :)\n"
-                       "Let's get started!\n");
-                printf("----Player----\n");
-                isValidIndex = 0;
-
-                while (isValidIndex != 1) {
-                    printf("Enter trap index (row col):");
-                    scanf("%d %d", &trapPlayerRow, &trapPlayerCol);
-
-                    check = checkTrapIndex(trapPlayerRow, trapPlayerCol);
-                    if (check == 1) {
-                        isValidIndex = 1;
-                    } else if (checkTrapIndex(trapPlayerRow, trapPlayerCol) == 0) {
-                        isValidIndex = 0;
-                        printf("The trap index should be placed around the board.\n");
-                    }
-                }
-                generateTrapValues(&trapValueComp, &trapValuePlayer);
-                printf("Generated trap value:%d\n", trapValuePlayer);
-                player[trapPlayerRow][trapPlayerCol] = '*';
-
-
-                printf("----Computer----\n");
-                generateTrapIndex(computer, &trapCopRow, &trapCopCol);
-                printf("Generated trap index (row col):%d %d\n", trapCopRow, trapCopCol);
-                printf("Generated trap value:%d\n", trapValueComp);
-                printf("---------Initial Boards-------\n");
-                displayBoard(computer, player);
-            }
-
+        if (firstTurnComp > firstTurnPlayer) {
+            printf("I have rolled the dice and got %d!\n", firstTurnComp);
+            printf("I have rolled the dice for you and you got %d!\n", firstTurnPlayer);
         } else {
+            printf("I have rolled the dice for you and you got %d!\n", firstTurnPlayer);
+            printf("I have rolled the dice and got %d!\n", firstTurnComp);
+        }
+
+        printf("----Player----\n");
+        while (!isValidIndex) {
+            printf("Enter trap index (row col): ");
+            if (scanf("%d %d", &trapPlayerRow, &trapPlayerCol) != 2) {
+                printf("Invalid input. Please enter two integers.\n");
+                clearInputBuffer();
+                continue;
+            }
+
+            if (checkTrapIndex(trapPlayerRow, trapPlayerCol)) {
+                isValidIndex = 1;
+            } else {
+                printf("The trap index should be placed around the board.\n");
+            }
+        }
+
+        player[trapPlayerRow][trapPlayerCol] = '*';
+        printf("Generated trap value: %d\n", trapValuePlayer);
+
+        printf("----Computer----\n");
+        generateTrapIndex(computer, &trapCopRow, &trapCopCol);
+        printf("Generated trap index (row col): %d %d\n", trapCopRow, trapCopCol);
+        printf("Generated trap value: %d\n", trapValueComp);
+
+        printf("---------Initial Boards-------\n");
+        displayBoard(computer, player);
+
+        while (!winnerComputer && !winnerPlayer) {
+            round++;
+            stepNumComp = rollDice();
+            stepNumPlayer = rollDice();
+
+            printf("---------Round %d-------\n", round);
 
             if (firstTurnComp > firstTurnPlayer) {
-                printf("---------Round %d-------\n", round);
                 printf("I have rolled the dice and got %d\n", stepNumComp);
                 printf("I have rolled the dice for you and you got %d\n", stepNumPlayer);
-                stepComputer(computer, stepNumComp, &rowCop, &colCop, &trapCopCol, &trapCopRow, &trapValueComp);
-                stepPlayer(player, stepNumPlayer, &rowPlayer, &colPlayer, &trapPlayerCol, &trapPlayerRow,
-                           &trapValuePlayer);
 
-                displayBoard(computer, player);
+                stepComputer(computer, stepNumComp, &rowCop, &colCop,
+                             trapCopCol, trapCopRow, trapValueComp);
 
-                //check cycle is done or not
-                if (round > 5) {
-                    for (int i = 0; i < 6; ++i) {
-                        if (colCop == (9 - i) && rowCop == 9) {
-                            checkWinner = 1;
-                            winnerComputer = 1;
-                            break;
-                        }
-
-                        if (colPlayer == (0 + i) && rowPlayer == 0) {
-                            checkWinner = 1;
-                            winnerPlayer = 1;
-                            break;
-                        }
-                    }
-                }
-
-                if (winnerPlayer == 1) {
-                    printf("\nYou Won!\n");
-                } else if (winnerComputer == 1) {
-                    printf("\nI Won!\n");
-                }
-
-                if (checkWinner == 1) {
-                    fflush(stdin);
-                    printf("Do you wanna play again?");
-                    scanf("%c", &again);
-                    if (again == 'N' || again == 'n') {
-                        break;
-                    } else if (again == 'Y' || again == 'y') {
-                        for (int i = 0; i < 10; i++) {
-                            for (int j = 0; j < 10; j++) {
-                                if (i == 0 || i == 9 || j == 0 || j == 9) {
-                                    player[i][j] = '-';
-                                    computer[i][j] = '-';
-                                } else {
-                                    player[i][j] = ' ';
-                                    computer[i][j] = ' ';
-                                }
-                            }
-                        }
-                        player[0][0] = 'P';
-                        computer[9][9] = 'C';
-                        round = -1;
-                    }
-                }
-
+                stepPlayer(player, stepNumPlayer, &rowPlayer, &colPlayer,
+                           trapPlayerCol, trapPlayerRow, trapValuePlayer);
             } else {
-                printf("---------Round %d-------\n", round);
                 printf("I have rolled the dice for you and you got %d\n", stepNumPlayer);
                 printf("I have rolled the dice and got %d\n", stepNumComp);
-                stepPlayer(player, stepNumPlayer, &rowPlayer, &colPlayer, &trapPlayerCol, &trapPlayerRow,
-                           &trapValuePlayer);
-                stepComputer(computer, stepNumComp, &rowCop, &colCop, &trapCopCol, &trapCopRow, &trapValueComp);
-                displayBoard(computer, player);
 
-                //check cycle is done or not
-                if (round > 5) {
-                    for (int i = 0; i < 6; ++i) {
-                        if (colCop == (9 - i) && rowCop == 9) {
-                            checkWinner = 1;
-                            winnerComputer = 1;
-                            break;
-                        }
+                stepPlayer(player, stepNumPlayer, &rowPlayer, &colPlayer,
+                           trapPlayerCol, trapPlayerRow, trapValuePlayer);
 
-                        if (colPlayer == (0 + i) && rowPlayer == 0) {
-                            checkWinner = 1;
-                            winnerPlayer = 1;
-                            break;
-                        }
-                    }
-                }
+                stepComputer(computer, stepNumComp, &rowCop, &colCop,
+                             trapCopCol, trapCopRow, trapValueComp);
+            }
 
+            displayBoard(computer, player);
 
-                if (winnerPlayer == 1) {
-                    printf("\nYou Won!\n");
-                } else if (winnerComputer == 1) {
-                    printf("\nI Won!\n");
-                }
-
-                if (checkWinner == 1) {
-                    fflush(stdin);
-                    printf("Do you wanna play again?");
-                    scanf("%c", &again);
-                    if (again == 'N' || again == 'n') {
+            if (round > 5) {
+                for (int i = 0; i < 6; i++) {
+                    if (colCop == (9 - i) && rowCop == 9) {
+                        winnerComputer = 1;
                         break;
-                    } else if (again == 'Y' || again == 'y') {
-                        for (int i = 0; i < 10; i++) {
-                            for (int j = 0; j < 10; j++) {
-                                if (i == 0 || i == 9 || j == 0 || j == 9) {
-                                    player[i][j] = '-';
-                                    computer[i][j] = '-';
-                                } else {
-                                    player[i][j] = ' ';
-                                    computer[i][j] = ' ';
-                                }
-                            }
-                        }
-                        player[0][0] = 'P';
-                        computer[9][9] = 'C';
-                        round = -1;
+                    }
+
+                    if (colPlayer == i && rowPlayer == 0) {
+                        winnerPlayer = 1;
+                        break;
                     }
                 }
             }
 
-
+            if (winnerPlayer) {
+                printf("\nYou Won!\n");
+            } else if (winnerComputer) {
+                printf("\nI Won!\n");
+            }
         }
-        round++;
-    } while (again != 'N' && again != 'n');
+
+        clearInputBuffer();
+        printf("Do you wanna play again? (Y/N): ");
+        scanf(" %c", &again);
+    }
+
+    freeBoards(computer, player);
+    printf("Bye\n");
+    return 0;
 }
 
-int rollDice(int r) {
-    int dice = (rand() % 6) + 1;
-    return dice;
+int rollDice(void) {
+    return (rand() % 6) + 1;
 }
 
-void stepComputer(char **computerStepArr, int stepNumComp, int *currentRow, int *currentCol, int *trapCopCol,
-                  int *trapCopRow, int *trapValueCop) {
+void stepComputer(char **computer, int stepNumComp, int *currentRow, int *currentCol,
+                  int trapCopCol, int trapCopRow, int trapValueCop) {
+    int reverseGame = 0;
+    int actualStep = stepNumComp;
+    int x = 9, y = 9;
+
     *currentRow = 9;
     *currentCol = 9;
-    int reverseGame;
-    int x = 9, y = 9;
-    int actualStep;
 
-    computerStepArr[*currentRow][*currentCol] = '-';
-    for (int i = 0; i < 36; i++) {
+    for (int i = 0; i < PATH_LENGTH; i++) {
         if (x < BOARD_SIZE - 1 && y == 0) {
             x++;
-            if (computerStepArr[y][x] == 'C') {
-                *currentRow = y;
-                *currentCol = x;
-            }
         } else if (y < BOARD_SIZE - 1 && x == BOARD_SIZE - 1) {
             y++;
-            if (computerStepArr[y][x] == 'C') {
-                *currentRow = y;
-                *currentCol = x;
-            }
         } else if (x > 0 && y == BOARD_SIZE - 1) {
             x--;
-            if (computerStepArr[y][x] == 'C') {
-                *currentRow = y;
-                *currentCol = x;
-            }
         } else if (y > 0 && x == 0) {
             y--;
-            if (computerStepArr[y][x] == 'C') {
-                *currentRow = y;
-                *currentCol = x;
-            }
+        }
+
+        if (computer[y][x] == 'C') {
+            *currentRow = y;
+            *currentCol = x;
         }
     }
-    computerStepArr[*currentRow][*currentCol] = '-';
-    for (int k = 0; k < stepNumComp; k++) {
+
+    computer[*currentRow][*currentCol] = '-';
+
+    for (int i = 0; i < stepNumComp; i++) {
         if ((*currentCol) < BOARD_SIZE - 1 && (*currentRow) == 0) {
             (*currentCol)++;
         } else if ((*currentRow) < BOARD_SIZE - 1 && (*currentCol) == BOARD_SIZE - 1) {
@@ -327,14 +219,11 @@ void stepComputer(char **computerStepArr, int stepNumComp, int *currentRow, int 
         }
     }
 
-
-    //stepTrapBackWard
-    if (*currentCol == *trapCopCol && *currentRow == *trapCopRow) {
-
-        if (stepNumComp > *trapValueCop) {
-            reverseGame = stepNumComp - *trapValueCop;
+    if (*currentCol == trapCopCol && *currentRow == trapCopRow) {
+        if (stepNumComp > trapValueCop) {
+            reverseGame = stepNumComp - trapValueCop;
             actualStep = reverseGame;
-        } else if (*trapValueCop > stepNumComp) {
+        } else {
             reverseGame = stepNumComp;
             actualStep = 0;
         }
@@ -350,50 +239,41 @@ void stepComputer(char **computerStepArr, int stepNumComp, int *currentRow, int 
                 (*currentCol)--;
             }
         }
-        printf("Computer Trapped at index %d %d! %d forward - %d backward = %d step.\n", *trapCopRow, *trapCopCol,
-               stepNumComp, *trapValueCop, actualStep);
+
+        printf("Computer Trapped at index %d %d! %d forward - %d backward = %d step.\n",
+               trapCopRow, trapCopCol, stepNumComp, trapValueCop, actualStep);
     }
-    computerStepArr[*currentRow][*currentCol] = 'C';
+
+    computer[*currentRow][*currentCol] = 'C';
 }
 
+void stepPlayer(char **player, int stepNumPlayer, int *currentRow, int *currentCol,
+                int trapPlayerCol, int trapPlayerRow, int trapValuePlayer) {
+    int reverseGame = 0;
+    int actualStep = stepNumPlayer;
+    int x = 0, y = 0;
 
-void stepPlayer(char **playerStepArr, int stepNumPlayer, int *currentRow, int *currentCol, int *trapPlayerCol,
-                int *trapPlayerRow, int *trapValuePlayer) {
-    int reverseGame, actualStep;
     *currentRow = 0;
     *currentCol = 0;
 
-    int x = 0, y = 0;
-    playerStepArr[*currentRow][*currentCol] = '-';
-    for (int i = 0; i < 36; i++) {
+    for (int i = 0; i < PATH_LENGTH; i++) {
         if (x < BOARD_SIZE - 1 && y == 0) {
             x++;
-            if (playerStepArr[y][x] == 'P') {
-                *currentRow = y;
-                *currentCol = x;
-            }
         } else if (y < BOARD_SIZE - 1 && x == BOARD_SIZE - 1) {
             y++;
-            if (playerStepArr[y][x] == 'P') {
-                *currentRow = y;
-                *currentCol = x;
-            }
         } else if (x > 0 && y == BOARD_SIZE - 1) {
             x--;
-            if (playerStepArr[y][x] == 'P') {
-                *currentRow = y;
-                *currentCol = x;
-            }
         } else if (y > 0 && x == 0) {
             y--;
-            if (playerStepArr[y][x] == 'P') {
-                *currentRow = y;
-                *currentCol = x;
-            }
+        }
+
+        if (player[y][x] == 'P') {
+            *currentRow = y;
+            *currentCol = x;
         }
     }
 
-    playerStepArr[*currentRow][*currentCol] = '-';
+    player[*currentRow][*currentCol] = '-';
 
     for (int i = 0; i < stepNumPlayer; i++) {
         if ((*currentCol) < BOARD_SIZE - 1 && (*currentRow) == 0) {
@@ -407,15 +287,10 @@ void stepPlayer(char **playerStepArr, int stepNumPlayer, int *currentRow, int *c
         }
     }
 
-    //stepTrapBackWard
-    if (*currentCol == *trapPlayerCol && *currentRow == *trapPlayerRow) {
-
-        if (stepNumPlayer > *trapValuePlayer) {
-            reverseGame = stepNumPlayer - *trapValuePlayer;
+    if (*currentCol == trapPlayerCol && *currentRow == trapPlayerRow) {
+        if (stepNumPlayer > trapValuePlayer) {
+            reverseGame = stepNumPlayer - trapValuePlayer;
             actualStep = reverseGame;
-        } else if (*trapValuePlayer > stepNumPlayer) {
-            reverseGame = stepNumPlayer;
-            actualStep = 0;
         } else {
             reverseGame = stepNumPlayer;
             actualStep = 0;
@@ -432,36 +307,37 @@ void stepPlayer(char **playerStepArr, int stepNumPlayer, int *currentRow, int *c
                 (*currentCol)--;
             }
         }
-        printf("Player Trapped at index %d %d! %d forward - %d backward = %d step.\n", *trapPlayerRow, *trapPlayerCol,
-               stepNumPlayer, *trapValuePlayer, actualStep);
+
+        printf("Player Trapped at index %d %d! %d forward - %d backward = %d step.\n",
+               trapPlayerRow, trapPlayerCol, stepNumPlayer, trapValuePlayer, actualStep);
     }
 
-    playerStepArr[*currentRow][*currentCol] = 'P';
+    player[*currentRow][*currentCol] = 'P';
 }
 
 void displayBoard(char **computer, char **player) {
     printf("    Player Board\n");
     printf("  ");
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < BOARD_SIZE; ++i) {
         printf("%d ", i);
     }
+
     for (int i = 0; i < BOARD_SIZE; i++) {
-        printf("\n");
-        printf("%d ", i);
+        printf("\n%d ", i);
         for (int j = 0; j < BOARD_SIZE; j++) {
             printf("%c ", player[i][j]);
         }
     }
-    printf("\n");
+    printf("\n\n");
 
     printf("    Computer Board\n");
     printf("  ");
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < BOARD_SIZE; ++i) {
         printf("%d ", i);
     }
+
     for (int i = 0; i < BOARD_SIZE; i++) {
-        printf("\n");
-        printf("%d ", i);
+        printf("\n%d ", i);
         for (int j = 0; j < BOARD_SIZE; j++) {
             printf("%c ", computer[i][j]);
         }
@@ -470,22 +346,22 @@ void displayBoard(char **computer, char **player) {
 }
 
 void generateTrapIndex(char **computerBoard, int *trapRow, int *trapCol) {
-
-    int r = 10;
     int side = rand() % 4;
+
     if (side == 0) {
         *trapRow = 0;
-        *trapCol = rand() * r % (BOARD_SIZE - 2) + 1;
-    } else if (side == 1) { // Right side
-        *trapRow = rand() * r % (BOARD_SIZE - 2) + 1;
+        *trapCol = rand() % (BOARD_SIZE - 2) + 1;
+    } else if (side == 1) {
+        *trapRow = rand() % (BOARD_SIZE - 2) + 1;
         *trapCol = BOARD_SIZE - 1;
     } else if (side == 2) {
         *trapRow = BOARD_SIZE - 1;
-        *trapCol = rand() * r % (BOARD_SIZE - 2) + 1;
-    } else if (side == 3) {
-        *trapRow = rand() * r % (BOARD_SIZE - 2) + 1;
+        *trapCol = rand() % (BOARD_SIZE - 2) + 1;
+    } else {
+        *trapRow = rand() % (BOARD_SIZE - 2) + 1;
         *trapCol = 0;
     }
+
     computerBoard[*trapRow][*trapCol] = '*';
 }
 
@@ -496,8 +372,8 @@ void generateTrapValues(int *trapValueComp, int *trapValuePlayer) {
 
 int checkTrapIndex(int trapPlayerRow, int trapPlayerCol) {
     int x = 0, y = 0;
-    int checkTrueOrFalse = 0;
-    for (int i = 0; i < 36; i++) {
+
+    for (int i = 0; i < PATH_LENGTH; i++) {
         if (x < BOARD_SIZE - 1 && y == 0) {
             x++;
         } else if (y < BOARD_SIZE - 1 && x == BOARD_SIZE - 1) {
@@ -509,10 +385,41 @@ int checkTrapIndex(int trapPlayerRow, int trapPlayerCol) {
         }
 
         if (trapPlayerRow == y && trapPlayerCol == x) {
-            checkTrueOrFalse = 1;
+            return 1;
         }
     }
-    return checkTrueOrFalse;
+
+    return 0;
 }
 
+void initializeBoards(char **computer, char **player) {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            if (i == 0 || i == BOARD_SIZE - 1 || j == 0 || j == BOARD_SIZE - 1) {
+                player[i][j] = '-';
+                computer[i][j] = '-';
+            } else {
+                player[i][j] = ' ';
+                computer[i][j] = ' ';
+            }
+        }
+    }
 
+    player[0][0] = 'P';
+    computer[9][9] = 'C';
+}
+
+void freeBoards(char **computer, char **player) {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        free(computer[i]);
+        free(player[i]);
+    }
+    free(computer);
+    free(player);
+}
+
+void clearInputBuffer(void) {
+    int ch;
+    while ((ch = getchar()) != '\n' && ch != EOF) {
+    }
+}
