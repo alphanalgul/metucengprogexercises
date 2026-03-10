@@ -32,26 +32,49 @@ The program performs the following tasks:
 
 ---
 
-## Input File Format
-ID Name Surname Gender Smoking Lung_Cancer
-1 John Smith M 1 Y
-2 Alice Brown F 0 N
-3 David White M 1 Y
-4 Emma Green F 0 N
+# Input File Format
+
+| ID | Name  | Surname | Gender | Smoking | Lung_Cancer |
+|----|------|--------|--------|--------|-------------|
+| 1  | John | Smith  | M      | 1      | Y |
+| 2  | Alice | Brown | F      | 0      | N |
+| 3  | David | White | M      | 1      | Y |
+| 4  | Emma | Green  | F      | 0      | N |
 
 ---
 
-## Sample Output
-Patients:
-ID      Name      Surname    Gender    Smoking    Lung_Cancer
-1       John      Smith      M         1          Y
-2       Alice     Brown      F         0          N
-3       David     White      M         1          Y
-4       Emma      Green      F         0          N
+# Sample Output
 
-Statistics:
-2 patient with cancer and 2 patient without cancer
-2 Male and 2 Female Patients
+## Patients Table
+
+| ID | Name  | Surname | Gender | Smoking | Lung_Cancer |
+|----|------|--------|--------|--------|-------------|
+| 1  | John | Smith  | M      | 1      | Y |
+| 2  | Alice | Brown | F      | 0      | N |
+| 3  | David | White | M      | 1      | Y |
+| 4  | Emma | Green  | F      | 0      | N |
+
+---
+
+## Statistics
+
+| Statistic | Value |
+|----------|------|
+| Patients with cancer | 2 |
+| Patients without cancer | 2 |
+| Male patients | 2 |
+| Female patients | 2 |
+
+---
+
+## Generated Files
+
+| File Name | Description |
+|----------|-------------|
+| `cancer.txt` | Contains records of patients with lung cancer |
+| `noncancer.txt` | Contains records of patients without lung cancer |
+
+The program prints:
 
 Two files are created for you: cancer.txt and noncancer.txt!
 
