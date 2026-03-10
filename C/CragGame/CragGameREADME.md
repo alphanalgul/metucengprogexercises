@@ -94,13 +94,4 @@ Scores are evaluated **top-down**, and only the **highest applicable category** 
 
 ---
 
-## 🛠️ Constraints
-
-- ❌ No global variables  
-- ❌ No arrays or strings  
-- ❌ No `goto`, `break`, or `continue`  
-- ✅ Only basic C constructs and functions used
-
----
-
 
