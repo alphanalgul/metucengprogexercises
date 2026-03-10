@@ -19,7 +19,7 @@ It produces two outputs:
 
 ---
 
-## 📋 Features
+## Features
 
 - Menu-driven interface with loop until user exits  
 - Accepts 3-bit binary or 1-digit hexadecimal input  
@@ -30,7 +30,7 @@ It produces two outputs:
 
 ---
 
-## 🖥️ Sample Run
+##  Sample Run
 
 - `Welcome to Full Subtractor!`
 - `(1) Compute and Display the outputs`
@@ -43,19 +43,6 @@ It produces two outputs:
 - `Which base will you use to enter input (base 2 or base 16)? 2`
 - `Please enter your input: 101`
 - `D is 0 Bout is 0`
-
----
-
-## 🛠️ Technical Constraints
-
-- ❌ No global variables
-- ❌ No arrays, strings, or functions (except `main`)
-- ❌ No bitwise operators (`&`, `|`, `^`, `~`)
-- ✅ Only use logical constructs:
-  - `&&`
-  - `||`
-  - `!`
-  - `if`, `while`, etc.
 
 ---
 
