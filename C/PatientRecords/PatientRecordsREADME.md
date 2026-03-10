@@ -54,7 +54,5 @@ Statistics:
 2 Male and 2 Female Patients
 
 Two files are created for you: cancer.txt and noncancer.txt!
-    int smoking;
-    char *Lung_Cancer;
-} Hospital;
+
 ---
