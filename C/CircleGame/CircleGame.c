@@ -397,8 +397,6 @@ int checkTrapIndex(int trapPlayerRow, int trapPlayerCol) {
     return 0;
 }
 
-    return 0;
-}
 
 void initializeBoards(char **computer, char **player) {
     for (int i = 0; i < BOARD_SIZE; i++) {
