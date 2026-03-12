@@ -68,3 +68,4 @@ The program uses **Depth First Search (DFS)** to determine
 whether a connection path exists between two users.
 
 Example:
+John → Alice → David
