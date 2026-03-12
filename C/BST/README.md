@@ -54,84 +54,96 @@
 
 ---
 
-## Data Structures
+## Sample Output
 
+### Insert First Instructor
+
+**Command:** `n`
+
+| Input | Value |
+|------|------|
+| Instructor Name | JohnSmith |
+| Title | Professor |
+
+**Tree Now**
+
+| Instructor | Title |
+|-----------|------|
+| JohnSmith | Professor |
 
 ---
 
-## Sample Output
-Menu:
- i)nitialize
- n)ew element
- t)instructor title
- s)search instructor
- e)xit
-Enter command: n
+### Insert Second Instructor
 
-Enter instructors name:JohnSmith
-Enter his/her title:Professor
-Tree now:
+**Command:** `n`
 
-JohnSmith Professor
+| Input | Value |
+|------|------|
+| Instructor Name | AliceBrown |
+| Title | Lecturer |
 
-Menu:
- i)nitialize
- n)ew element
- t)instructor title
- s)search instructor
- e)xit
-Enter command: n
+**Tree Now**
 
-Enter instructors name:AliceBrown
-Enter his/her title:Lecturer
-Tree now:
+| Instructor | Title |
+|-----------|------|
+| AliceBrown | Lecturer |
+| JohnSmith | Professor |
 
-AliceBrown Lecturer
-JohnSmith Professor
+---
 
-Menu:
- i)nitialize
- n)ew element
- t)instructor title
- s)search instructor
- e)xit
-Enter command: n
+### Insert Third Instructor
 
-Enter instructors name:MarkWhite
-Enter his/her title:AssistantProfessor
-Tree now:
+**Command:** `n`
 
-AliceBrown Lecturer
-JohnSmith Professor
-MarkWhite AssistantProfessor
+| Input | Value |
+|------|------|
+| Instructor Name | MarkWhite |
+| Title | AssistantProfessor |
 
-Menu:
- i)nitialize
- n)ew element
- t)instructor title
- s)search instructor
- e)xit
-Enter command: t
+**Tree Now**
 
-Enter instructors name:JohnSmith
-Professor
+| Instructor | Title |
+|-----------|------|
+| AliceBrown | Lecturer |
+| JohnSmith | Professor |
+| MarkWhite | AssistantProfessor |
 
-Menu:
- i)nitialize
- n)ew element
- t)instructor title
- s)search instructor
- e)xit
-Enter command: s
+---
 
-Enter a character:M
+### Search Instructor Title
 
-MarkWhite AssistantProfessor
+**Command:** `t`
 
-Menu:
- i)nitialize
- n)ew element
- t)instructor title
- s)search instructor
- e)xit
-Enter command: e
+| Input | Value |
+|------|------|
+| Instructor Name | JohnSmith |
+
+**Result**
+
+| Instructor | Title |
+|-----------|------|
+| JohnSmith | Professor |
+
+---
+
+### Search Instructors by First Letter
+
+**Command:** `s`
+
+| Input | Value |
+|------|------|
+| First Character | M |
+
+**Matching Instructors**
+
+| Instructor | Title |
+|-----------|------|
+| MarkWhite | AssistantProfessor |
+
+---
+
+### Exit Program
+
+**Command:** `e`
+
+---
