@@ -63,7 +63,7 @@ Salmon,12,45.5,2024-01-15,Trabzon
 Tuna,20,60.2,2024-02-10,Izmir
 Carp,12,40.0,2024-03-05,Ankara
 ```
-non---
+---
 
 ## Console Output
 ```text
