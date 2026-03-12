@@ -70,12 +70,3 @@ MSE = \frac{\sum (A[i] - B[i])^2}{N}
 - Functions
 
 ---
-
-## How to Compile and Run
-
-Use GCC to compile each program separately.
-
-### Example
-```bash
-gcc eye_dilation.c -o eye_dilation
-./eye_dilation
