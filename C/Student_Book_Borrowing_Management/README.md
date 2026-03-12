@@ -82,8 +82,3 @@ When the load factor exceeds **0.5**, the table is resized to the next
 prime number greater than double the current size.
 
 ---
-
-## Compilation
-
-```bash
-gcc Student_Book_Borrowing_Management.c -o borrowing_system
