@@ -1,84 +1,70 @@
-# Student Book Borrowing Management System (Hash Table)
+
+# Social Network Graph Analysis
 
 ## Description
 
-This program implements a **student book borrowing management system**
-using a **hash table with open addressing**.
+This program simulates a **social network** using a **directed graph**.
 
-Each student is stored in the hash table and maintains a linked list of
-borrowed books. The program allows users to manage borrowing records
-efficiently using different collision resolution strategies.
+Each user is represented as a vertex, and each friendship or follow
+relationship is represented as a directed edge.
 
-The system reads borrowing records from a file and dynamically stores
-them in the hash table.
+The system allows analysis of relationships between users and
+performs graph-based operations such as finding the most followed user
+and searching for connections between users.
 
 ---
 
 ## Data Structures Used
 
-- Hash Table
+- Graph (Adjacency List Representation)
 - Linked Lists
-- Dynamic Memory Allocation
-- Struct-based record storage
+- Depth First Search (DFS)
 
 ---
 
-## Hash Table Features
+## Graph Model
 
-The hash table supports three collision resolution techniques:
+Users are nodes in the graph.
 
-1. Linear Probing
-2. Quadratic Probing
-3. Double Hashing
+Friendships or follow relationships are directed edges.
 
-The program also implements **rehashing** when the load factor exceeds 0.5.
+Example:
 
----
+John → Alice
 
-## Student Records
-
-Each student contains:
-
-- Student ID
-- Student Name
-- Borrow Count
-- Linked list of borrowed books
-
-Each borrowed book record includes:
-
-- Borrow ID
-- Book Title
-- Author
-- Borrow Date
+means **John follows Alice**.
 
 ---
 
 ## Program Features
 
-The system provides a menu-driven interface with the following operations:
+The program provides an interactive menu:
 
-1. Print the hash table
-2. Search for a student and display borrowing records
-3. Return a borrowed book
+1. Depth-first search to find a connection path between two users
+2. Find the user with the most followers
+3. Find the user who follows the most users
 4. Exit the program
 
 ---
 
-## Hash Function
+## Example Users
 
-The hash key is computed by multiplying the non-zero digits of the student ID.
+The network includes users such as:
+
+- John
+- Alice
+- Bob
+- David
+- Eve
+- Frank
+
+Friendships are defined programmatically.
+
+---
+
+## DFS Path Search
+
+The program uses **Depth First Search (DFS)** to determine
+whether a connection path exists between two users.
 
 Example:
-
-Student ID: `2035`
-
-Key = 2 × 3 × 5
-
----
-
-## Rehashing
-
-When the load factor exceeds **0.5**, the table is resized to the next
-prime number greater than double the current size.
-
----
