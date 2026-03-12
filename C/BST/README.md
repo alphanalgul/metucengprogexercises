@@ -56,21 +56,10 @@
 
 ## Data Structures
 
-### Binary Search Tree Node
 
-The program uses the following structure:
-
-struct TreeNode
-{
-    int val;
-    char *instructor;
-    char *title;
-    struct TreeNode* left;
-    struct TreeNode* right;
-};
 ---
 
-##Sample Output
+## Sample Output
 Menu:
  i)nitialize
  n)ew element
