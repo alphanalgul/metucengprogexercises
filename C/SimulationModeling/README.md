@@ -421,7 +421,7 @@ Most programs do not require external input files.
 | `exponential2.c` | No                      | No                        |
 | `fcfs-queue.c`   | No                      | Yes                       |
 | `geometric.c`    | No                      | No                        |
-| `lcg.c`          | No                      | Depends on implementation |
+| `lcg.c`          | No                      |  Yes, user enters `a`, `c`, `m`, `seed`, and number of values|
 | `poisson.c`      | No                      | No                        |
 | `uniform.c`      | No                      | No                        |
 
