@@ -1,72 +1,301 @@
 # Simple Programs in C
 
-This folder contains three short C programs written for basic programming practice.  
-Each program focuses on a different concept such as loops, functions, arrays, random number generation, and simple data analysis.
+## Description
+
+This folder contains three short **C programming exercises**.
+
+Each program focuses on basic programming concepts such as:
+
+* functions
+* loops
+* arrays
+* pointers
+* dynamic memory allocation
+* random number generation
+* conditional statements
+* simple calculations
+* basic data analysis
+
+These programs were written as introductory C exercises.
+
+---
 
 ## Programs Included
 
-### 1. Eye Dilation Simulation
+| Program                       | Source File            | Description                                                                  |
+| ----------------------------- | ---------------------- | ---------------------------------------------------------------------------- |
+| Eye Dilation Simulation       | `IrisRatioAge.c`       | Simulates eye dilation data and classifies users into age groups             |
+| Cholesterol Level Analyzer    | `LabCholesterolTest.c` | Calculates cholesterol category percentages for a lab                        |
+| Mean Squared Error Calculator | `Vectors.c`            | Calculates MSE between a user-entered vector and a randomly generated vector |
+
+---
+
+# 1. Eye Dilation Simulation
+
+## Description
+
 This program simulates eye dilation data for a number of users.
 
-#### What it does
-- Asks the user for the number of users
-- Randomly generates:
-  - iris radius
-  - pupil radius
-- Computes a **dilation ratio** using a custom formula
-- Classifies each user into an age group:
-  - **Young**
-  - **Adult**
-  - **Elderly**
+For each user, the program randomly generates:
 
-#### Concepts used
-- Functions
-- Loops
-- Random number generation
-- Conditional statements
+* iris radius
+* pupil radius
+
+Then it calculates a dilation ratio using a custom formula and classifies the user into one of three age groups:
+
+* Young
+* Adult
+* Elderly
 
 ---
 
-### 2. Cholesterol Level Analyzer
-This program analyzes cholesterol level categories entered by the user for a lab.
+## Program Behavior
 
-#### What it does
-- Asks the user for a **Lab ID**
-- Accepts patient cholesterol categories as characters:
-  - `D` / `d` → Dangerous
-  - `R` / `r` → At Risk
-  - `H` / `h` → Healthy
-- Stops reading input when the user presses **Enter**
-- Calculates and displays the percentage of patients in each category
+1. The user enters the number of users.
+2. For each user:
 
-#### Concepts used
-- Character input
-- Counters
-- Percent calculations
-- Conditional statements
-- While loops
+   * iris radius is randomly generated
+   * pupil radius is randomly generated
+   * dilation ratio is calculated
+   * age group is displayed
 
 ---
 
-### 3. Mean Squared Error (MSE) Calculator
+## Age Group Classification
+
+| Dilation Ratio | Age Group |
+| -------------: | --------- |
+|        `< 200` | Young     |
+| `200 - 299.99` | Adult     |
+|       `>= 300` | Elderly   |
+
+---
+
+## How to Run
+
+### Compile
+
+```bash
+gcc IrisRatioAge.c -o iris_ratio_age
+```
+
+### Run
+
+On Linux/macOS:
+
+```bash
+./iris_ratio_age
+```
+
+On Windows PowerShell:
+
+```bash
+.\iris_ratio_age.exe
+```
+
+---
+
+## Input Requirements
+
+No external input file is required.
+
+The user only enters the number of users.
+
+Example:
+
+```text
+Enter the number of users: 5
+```
+
+---
+
+# 2. Cholesterol Level Analyzer
+
+## Description
+
+This program analyzes cholesterol level categories entered by the user for a specific lab.
+
+The user enters a lab ID and then enters cholesterol category characters for patients.
+
+The accepted categories are:
+
+| Character  | Meaning   |
+| ---------- | --------- |
+| `D` or `d` | Dangerous |
+| `R` or `r` | At Risk   |
+| `H` or `h` | Healthy   |
+
+The program calculates the percentage of patients in each category.
+
+---
+
+## Program Behavior
+
+1. The user enters the lab ID.
+2. The user enters cholesterol level characters.
+3. Input stops when the user presses Enter.
+4. The program counts each category.
+5. The program calculates and displays percentages.
+
+---
+
+## Features
+
+* Reads lab ID
+* Reads cholesterol categories as characters
+* Accepts uppercase and lowercase input
+* Counts dangerous, at-risk, and healthy patients
+* Calculates percentage for each category
+* Handles the case where no category is entered
+
+---
+
+## How to Run
+
+### Compile
+
+```bash
+gcc LabCholesterolTest.c -o cholesterol_test
+```
+
+### Run
+
+On Linux/macOS:
+
+```bash
+./cholesterol_test
+```
+
+On Windows PowerShell:
+
+```bash
+.\cholesterol_test.exe
+```
+
+---
+
+## Input Requirements
+
+No external input file is required.
+
+The user enters:
+
+1. Lab ID
+2. Cholesterol category characters
+
+Example:
+
+```text
+Enter the lab ID: 101
+Please input the cholesterol levels of your patients: DdRrHh
+```
+
+Then press Enter to finish input.
+
+---
+
+## Example Output
+
+```text
+Statistics for Lab 101:
+Dangerous Level: 33.3 %
+At Risk: 33.3 %
+Heart Healthy: 33.3 %
+```
+
+---
+
+# 3. Mean Squared Error Calculator
+
+## Description
+
 This program calculates the **Mean Squared Error (MSE)** between two vectors.
 
-#### What it does
-- Asks the user for the number of measurements
-- Reads the first vector from user input
-- Randomly generates the second vector
-- Prints the predicted values
-- Computes:
+The first vector is entered by the user.
 
-\[
-MSE = \frac{\sum (A[i] - B[i])^2}{N}
-\]
+The second vector is randomly generated by the program.
 
-#### Concepts used
-- Arrays and pointers
-- Dynamic memory allocation
-- Random number generation
-- Mathematical calculations
-- Functions
+The program then prints the vectors and calculates the MSE value.
+
+---
+
+## Mean Squared Error Formula
+
+```text
+MSE = sum((A[i] - B[i])²) / N
+```
+
+Where:
+
+* `A[i]` is the user-entered value
+* `B[i]` is the randomly generated value
+* `N` is the number of measurements
+
+---
+
+## Program Behavior
+
+1. The user enters the number of measurements.
+2. The user enters values for the first vector.
+3. The program validates that each value is between `1` and `100`.
+4. The second vector is randomly generated with values between `1` and `100`.
+5. The program displays both vectors.
+6. The program calculates and displays the MSE.
+
+---
+
+## Features
+
+* Uses dynamic memory allocation
+* Reads vector values from the user
+* Validates measurement values
+* Randomly generates the second vector
+* Calculates Mean Squared Error
+* Uses arrays and pointers
+
+---
+
+## How to Run
+
+### Compile
+
+```bash
+gcc Vectors.c -o vectors -lm
+```
+
+### Run
+
+On Linux/macOS:
+
+```bash
+./vectors
+```
+
+On Windows PowerShell:
+
+```bash
+.\vectors.exe
+```
+
+---
+
+## Input Requirements
+
+No external input file is required.
+
+The user enters:
+
+1. Number of measurements
+2. Measurement values between `1` and `100`
+
+Example:
+
+```text
+Enter the number of measurements: 4
+Enter the measurement [1]: 10
+Enter the measurement [2]: 25
+Enter the measurement [3]: 40
+Enter the measurement [4]: 80
+```
 
 ---
