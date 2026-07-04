@@ -32,5 +32,10 @@ int main(){
  Component *second = new Component(3); 
  Aggregate *aggregate = new Aggregate(first, second); 
  aggregate->show_components(); 
+
+ delete aggregate;
+ delete first;
+ delete second;
+
  return 0; 
 }
