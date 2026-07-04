@@ -23,8 +23,7 @@ class Aggregate{
       contained2 = two; 
   } 
   void show_components(){ 
-   cout << contained1 ->get() << " | " << contained2 
->get(); 
+   cout << contained1 ->get() << " | " << contained2 ->get(); 
   } 
 }; 
  
