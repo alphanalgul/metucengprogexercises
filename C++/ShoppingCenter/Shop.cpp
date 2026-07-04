@@ -14,30 +14,26 @@ Shop::Shop() {
     s = None;
 }
 
-Shop::Shop(char *s_name, int s_size, int stype):
-Business(s_name,s_size)
-{
-  employeeCount = -0;
-  if(stype == 1)
-  {
-    s = Clothing;
-  }
-  if(stype == 2)
-  {
-   s = Technology;
-  }
-  if(stype == 3)
-  {
-   s = Accessories;
-  }
-  if(stype == 4)
-  {
-   s = Beauty;
-  }
-  if(stype == -1)
-  {
-      s = None;
-  }
+Shop::Shop(char *s_name, int s_size, int stype) : Business(s_name, s_size) {
+    employeeCount = 0;
+    type = stype;
+
+    if (stype == 1) {
+        s = Clothing;
+    }
+    else if (stype == 2) {
+        s = Technology;
+    }
+    else if (stype == 3) {
+        s = Accessories;
+    }
+    else if (stype == 4) {
+        s = Beauty;
+    }
+    else {
+        s = None;
+        type = -1;
+    }
 }
 
 void Shop::setShopType(int stype) {
