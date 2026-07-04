@@ -25,14 +25,7 @@ int Restaurant::getSeatNum() const {
 }
 
 bool Restaurant::checkSuitability(int seat_num) const {
-    if (seat_num >= seat_number)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return seat_number >= seat_num;
 }
 
 void Restaurant::printBusiness() {
