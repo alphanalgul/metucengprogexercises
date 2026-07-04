@@ -12,9 +12,7 @@ The project includes:
 * Uniform Cost Search
 * A* Search
 * Greedy Best-First Search
-* Graph representation using adjacency lists
 * Heuristic functions
-* Path reconstruction using parent pointers
 * Poisonous Chocolate game
 * Minimax-based AI player
 * Randomized simulation of 100 games
