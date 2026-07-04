@@ -15,7 +15,7 @@ public:
     Business();
     Business(const char *name,int size);
     Business(const Business &b);
-    ~Business();
+    virtual ~Business();
     Business& operator=(const Business &b);
     void setBusinessName(char const *name);
     void setBusinessSize(int size);
