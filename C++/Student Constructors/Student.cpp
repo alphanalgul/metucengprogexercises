@@ -23,24 +23,22 @@ Student::Student()
   cgpa = 0.0;
 
 }
+
 void Student::createStudent(const char *sname, const char *ssurname, int snum, const char *sBD, float scgpa) {
-    int size_sname = sizeof(sname) - 1;
-    strncpy(this->name,sname,size_sname);
+    strncpy(name, sname, 49);
+    name[49] = '\0';
 
+    strncpy(surname, ssurname, 49);
+    surname[49] = '\0';
 
-    int size_ssurname = sizeof(ssurname) - 1;
-    strncpy(this->surname,ssurname,size_ssurname);
+    student_number = snum;
 
+    strncpy(birthdate, sBD, 49);
+    birthdate[49] = '\0';
 
-    this->student_number=snum;
-
-    int size_bdate = sizeof(birthdate) - 1;
-    strncpy(this->birthdate,sBD,size_bdate);
-
-
-
-    this->cgpa=scgpa;
+    cgpa = scgpa;
 }
+
 void Student::printStudent()
 
 {
