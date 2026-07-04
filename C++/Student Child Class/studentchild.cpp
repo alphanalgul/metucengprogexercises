@@ -13,11 +13,11 @@ Student::Student(){
 };
 
 void Student::createStudent(const char *sname, int student_no, float scgpa) {
-    int sname_size = strlen(sname);
-    strncpy(this->name,sname,sname_size);
+    strncpy(name, sname, 49);
+    name[49] = '\0';
 
-    this->student_number = student_no;
-    this->cgpa = scgpa;
+    student_number = student_no;
+    cgpa = scgpa;
 }
 
 void Student::printStudent() {
