@@ -1,6 +1,6 @@
 # Shopping Centre Management System
 
-This assignment implements a **Shopping Centre Management System** in C++ using object-oriented programming principles. The program models a shopping centre that can contain different types of businesses, such as restaurants and shops, and allows employees to be assigned to these businesses.
+This project implements a **Shopping Centre Management System** in C++ using object-oriented programming principles. The program models a shopping centre that can contain different types of businesses, such as restaurants and shops, and allows employees to be assigned to these businesses.
 
 ## Overview
 
