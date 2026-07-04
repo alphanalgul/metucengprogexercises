@@ -4,7 +4,7 @@
 using std::cout;
 
 Student::Student(){
-    int size_name = strlen("Mot Provided");
+    int size_name = strlen("Not Provided");
     strncpy(name,"Not Provided",size_name);
     name[size_name] = '\0';
 
