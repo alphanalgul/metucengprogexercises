@@ -1,6 +1,6 @@
 # Prolog Programming Exercises
 
-This folder contains Prolog programming exercises completed as part of my METU NCC Computer Engineering programming practice for CNG 242. The exercises focus on logic programming fundamentals such as facts, rules, predicates, recursion, arithmetic relations, comparisons, and simple knowledge-base queries.
+This folder contains Prolog programming exercises completed as part of my METU NCC Computer Engineering programming practice for CNG 242 Programming Language Concepts. The exercises focus on logic programming fundamentals such as facts, rules, predicates, recursion, arithmetic relations, comparisons, and simple knowledge-base queries.
 
 ## Contents
 
