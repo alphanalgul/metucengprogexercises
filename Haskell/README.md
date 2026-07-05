@@ -1,6 +1,6 @@
 # Haskell Programming Exercises
 
-This folder contains Haskell programming exercises completed as part of my METU NCC Computer Engineering programming practice. The exercises focus on functional programming fundamentals such as recursion, pattern matching, guards, case expressions, list processing, custom data types, type classes, and tree structures.
+This folder contains Haskell programming exercises completed as part of my METU NCC Computer Engineering programming practice for CNG 242 Programming Language Concepts. The exercises focus on functional programming fundamentals such as recursion, pattern matching, guards, case expressions, list processing, custom data types, type classes, and tree structures.
 
 ## Contents
 
