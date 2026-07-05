@@ -1,6 +1,6 @@
 # Python Programming Exercises
 
-This folder contains Python programming exercises completed as part of my METU NCC Computer Engineering programming practice. The exercises mainly focus on Python fundamentals, string processing, regular expressions, mathematical helper functions, and basic bioinformatics operations such as DNA transcription, translation, reverse complements, reading frames, and sequence alignment.
+This folder contains Python programming exercises completed as part of my METU NCC Computer Engineering programming practice for CNG 111 Introduction to Computer Engineering Concepts and CNG 465 Introduction to Bioinformatics. The exercises mainly focus on Python fundamentals, string processing, regular expressions, mathematical helper functions, and basic bioinformatics operations such as DNA transcription, translation, reverse complements, reading frames, and sequence alignment.
 
 ## Contents
 
