@@ -260,8 +260,6 @@ Alphan is passing a course
 
 The word **Interfaces** in the folder name refers to **Java interfaces**, not GUI screens.
 
-This project does not contain:
-
 * `JFrame`
 * `JButton`
 * `JPanel`
