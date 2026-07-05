@@ -6,8 +6,6 @@ The application allows users to manage employee records through a graphical user
 
 ## Project Overview
 
-The purpose of this project is to practice Java GUI programming and file handling together in a small employee management system.
-
 The program uses a menu-based Swing interface with options for:
 
 * Adding an employee
