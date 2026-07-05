@@ -24,7 +24,7 @@ The exercises in this repository are related to several METU NCC Computer Engine
 | CNG 111 | Introduction to Computer Engineering Concepts | `Python/` |
 | CNG 140 | C Programming | `C/` |
 | CNG 213 | Data Structures | `C/` |
-| CNG 242 | Programming Language Concepts | `C++/, `Haskell/`, `Prolog/` |
+| CNG 242 | Programming Language Concepts | `C++/`, `Haskell/`, `Prolog/` |
 | CNG 315 | Algorithms | `C/` |
 | CNG 334 | Operating Systems | `C/` |
 | CNG 443 | Introduction to Object-Oriented Programming Languages and Systems | `Java/` |
