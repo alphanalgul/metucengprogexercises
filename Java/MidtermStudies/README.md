@@ -216,5 +216,4 @@ Enter student id:
 Enter student birthday:
 12/05/2003
 ```
-design.
 
