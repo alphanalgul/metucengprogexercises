@@ -249,37 +249,49 @@ This section is reserved for screenshots of the application interfaces.
 
 Create an `images` folder inside this project and upload your screenshots there. Then update the image paths below if needed.
 
+## Interfaces
+
+This section contains screenshots of the main application interfaces.
+
 ### Main Menu
 
 ![Main Menu](images/main-menu.png)
 
-### Add Employee Interface
+### Add Student
 
-![Add Employee Interface](images/add-employee.png)
+![Add Student](images/add-student.png)
 
-### Add Student Interface
+### List All Students
 
-![Add Student Interface](images/add-student.png)
+![List All Students](images/list-all-students.png)
 
-### Make Reservation Interface
+### Delete Student
 
-![Make Reservation Interface](images/make-reservation.png)
+![Delete Student](images/delete-student.png)
 
-### Student Details Interface
+### Add Employee
 
-![Student Details Interface](images/student-details.png)
+![Add Employee](images/add-employee.png)
 
-### Employee Details Interface
+### List All Employees
 
-![Employee Details Interface](images/employee-details.png)
+![List All Employees](images/list-all-employees.png)
 
-### Reservation Details Interface
+### Delete Employee
 
-![Reservation Details Interface](images/reservation-details.png)
+![Delete Employee](images/delete-employee.png)
 
-### Loyalty Comparison Interface
+### Make Reservation
 
-![Loyalty Comparison Interface](images/loyalty-comparison.png)
+![Make Reservation](images/make-reservation.png)
+
+### Student Reservation Details
+
+![Student Reservation Details](images/student-reservation-details.png)
+
+### Loyalty Comparison
+
+![Loyalty Comparison](images/loyalty-comparison.png)
 
 ## Example Use Cases
 
