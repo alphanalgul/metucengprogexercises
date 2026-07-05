@@ -1,4 +1,4 @@
-# Campus Book Store with Interface
+# Campus Book Store Application
 
 A Java object-oriented programming project that simulates a campus bookstore management system. The system manages employees, students, textbook reservations, book items, reservation costs, identity checks, and student loyalty comparisons.
 
